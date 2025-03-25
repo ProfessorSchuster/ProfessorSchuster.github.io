@@ -2,6 +2,7 @@
 selenium==4.30.0
 requests==2.32.3
 beautifulsoup4==4.13.3
+pytz==2025.2
 
 # -- Wenn du wirklich Pandas/Numpy brauchst --
 pandas==2.2.3
