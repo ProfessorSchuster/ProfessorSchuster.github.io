@@ -1,33 +1,47 @@
 name: Update Preis
 
 on:
+  push:
+    branches:
+      - main
   schedule:
-    - cron: '0 * * * *'  # stündlich (Minute 0 jeder Stunde)
+    - cron: '0 * * * *'  # Stündlich
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-    - name: Install dependencies
-      run: pip install requests beautifulsoup4
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
 
-    - name: Run update script
-      run: python update_price.py
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
 
-    - name: Commit and push changes
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add preis.html
-        git commit -m "Automatische Aktualisierung des Preises" || echo "Keine Änderungen"
-        git push
+      - name: Run update script
+        env:
+          CHROME_BINARY: /usr/bin/chromium-browser
+        run: python update_price.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add index.html
+          git commit -m "Automatische Aktualisierung des Preises" || echo "Keine Änderungen"
+          git push

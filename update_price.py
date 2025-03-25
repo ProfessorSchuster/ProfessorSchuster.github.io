@@ -1,39 +1,41 @@
+import os
 import time
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
-URL = "https://www.troostwijkauctions.com/de/l/500-m%C2%B2-unterirdischer-militarbunker-mit-gebauden-und-richtbalkenturm-auf-einem-gesamtgrundstuck-von-16-500-m%C2%B2-in-colpin-mechlenburg-vorpommern-deutschland-A1-32543-1"
+# Pfad zur Chrome-Binary in GitHub Actions
+chrome_binary = os.environ.get("CHROME_BINARY", "/usr/bin/google-chrome")
 
 def extract_price():
     chrome_options = Options()
+    chrome_options.binary_location = chrome_binary
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    # Falls du den Browser-Fenster-Size anpassen willst:
-    # chrome_options.add_argument('--window-size=1280,720')
 
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(
+        service=Service(ChromeDriverManager().install()), 
+        options=chrome_options
+    )
+    URL = "https://www.troostwijkauctions.com/de/l/500-m%C2%B2-unterirdischer-militarbunker-mit-gebauden-und-richtbalkenturm-auf-einem-gesamtgrundstuck-von-16-500-m%C2%B2-in-colpin-mechlenburg-vorpommern-deutschland-A1-32543-1"
     driver.get(URL)
 
-    # Kurz warten, bis JS den Preis gerendert hat (manchmal braucht es 1-2 Sekunden)
-    time.sleep(3)
+    time.sleep(3)  # kurz warten bis alles geladen ist
 
-    # price_element = driver.find_element("css selector", '[data-cy="item-bid-current-bid-text"]')
-    # Manche Seiten haben mehrere Selektoren oder brauchen XPATH:
-    # price_element = driver.find_element("xpath", '//span[@data-cy="item-bid-current-bid-text"]')
-
-    # Versuchen wir erst mit CSS:
     try:
         price_element = driver.find_element("css selector", '[data-cy="item-bid-current-bid-text"]')
         preis = price_element.text.strip()
-    except:
+    except Exception as e:
+        print("Fehler beim Finden des Preis-Elements:", e)
         preis = "n/a"
 
     driver.quit()
     return preis
 
 def render_html(price):
-    with open("index.template.html", "r", encoding="utf-8") as f:
+    with open("preis.template.html", "r", encoding="utf-8") as f:
         template = f.read()
     output = template.replace("{{PREIS}}", price)
     with open("index.html", "w", encoding="utf-8") as f:
