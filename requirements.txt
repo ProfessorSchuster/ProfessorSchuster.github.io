@@ -18,7 +18,6 @@ pypiwin32==223
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
 pytz==2025.2
-pywin32==310
 requests==2.32.3
 selenium==4.30.0
 six==1.12.0
