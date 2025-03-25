@@ -3,7 +3,6 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
 
 # Pfad zur Chrome-Binary in GitHub Actions
 chrome_binary = os.environ.get("CHROME_BINARY", "/usr/bin/google-chrome")
@@ -16,8 +15,8 @@ def extract_price():
     chrome_options.add_argument('--disable-dev-shm-usage')
 
     driver = webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()), 
-        options=chrome_options
+    service=Service("/usr/bin/chromedriver"),
+    options=chrome_options
     )
     URL = "https://www.troostwijkauctions.com/de/l/500-m%C2%B2-unterirdischer-militarbunker-mit-gebauden-und-richtbalkenturm-auf-einem-gesamtgrundstuck-von-16-500-m%C2%B2-in-colpin-mechlenburg-vorpommern-deutschland-A1-32543-1"
     driver.get(URL)

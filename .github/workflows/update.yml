@@ -28,13 +28,14 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Install Chrome
+      - name: Install Chromium + Driver
         run: |
           sudo apt-get update
-          sudo apt-get install -y chromium-browser
+          sudo apt-get install -y chromium-browser chromium-chromedriver
 
       - name: Run update script
         env:
+          # Wo liegt dein Chromium-Browser
           CHROME_BINARY: /usr/bin/chromium-browser
         run: python update_price.py
 
