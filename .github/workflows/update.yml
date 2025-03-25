@@ -1,0 +1,33 @@
+name: Update Preis
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # stündlich (Minute 0 jeder Stunde)
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: pip install requests beautifulsoup4
+
+    - name: Run update script
+      run: python update_price.py
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add preis.html
+        git commit -m "Automatische Aktualisierung des Preises" || echo "Keine Änderungen"
+        git push
