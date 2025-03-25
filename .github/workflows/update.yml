@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 * * * *'  # Stündlich
+    - cron: '*/5 * * * *'  # Stündlich
   workflow_dispatch:
 
 permissions:
