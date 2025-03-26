@@ -1,7 +1,6 @@
 name: Build Docker Image
 
 on:
-  # Du kannst das manuell starten oder bei jedem Push auf main
   push:
     branches: [ main ]
   workflow_dispatch:
@@ -31,10 +30,12 @@ jobs:
 
       - name: Build Docker image
         run: |
+          # Hier manuell in Kleinbuchstaben.
+          # Statt "ProfessorSchuster/ProfessorSchuster.github.io" also z.B. "professorschuster/professorschuster-github-io"
           docker build \
-            -t ghcr.io/${{ github.repository }}/githubpage:latest \
+            -t ghcr.io/professorschuster/professorschuster-github-io:latest \
             .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository }}/githubpage:latest
+          docker push ghcr.io/professorschuster/professorschuster-github-io:latest
