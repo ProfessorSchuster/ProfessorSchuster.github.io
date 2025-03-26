@@ -1,13 +1,14 @@
 name: Build Docker Image
 
 on:
+  # Baut das Image bei jedem Push auf main und bei manuellem Dispatch
   push:
     branches: [ main ]
   workflow_dispatch:
 
 permissions:
   contents: write
-  packages: write
+  packages: write  # wichtig, damit GHCR push klappt
 
 jobs:
   build-and-push:
@@ -30,12 +31,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          # Hier manuell in Kleinbuchstaben.
-          # Statt "ProfessorSchuster/ProfessorSchuster.github.io" also z.B. "professorschuster/professorschuster-github-io"
           docker build \
-            -t ghcr.io/professorschuster/professorschuster-github-io:latest \
+            -f Dockerfile.build \
+            -t ghcr.io/professorschuster/professorschuster.github.io:latest \
             .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/professorschuster/professorschuster-github-io:latest
+          docker push ghcr.io/professorschuster/professorschuster.github.io:latest

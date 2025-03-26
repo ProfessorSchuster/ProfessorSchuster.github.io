@@ -4,38 +4,33 @@ on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '*/10 * * * *'  # alle 10 min oder was du möchtest
+    - cron: '5 * * * *'  # stündlich, anpassen wie du möchtest
   workflow_dispatch:
 
 permissions:
   contents: write
-  packages: read   # <-- "read" reicht, um das Image zu pullen
+  packages: read   # wir müssen das Image aus GHCR pullen können
 
 jobs:
   update:
     runs-on: ubuntu-latest
     container:
-      # Der Container, der verwendet werden soll:
-      image: ghcr.io/<dein-user>/<dein-repo>/githubpage:latest
-
+      image: ghcr.io/professorschuster/professorschuster-github-io:latest
     steps:
       - name: Check out code
         uses: actions/checkout@v3
 
       - name: Run update script
         run: |
+          # Hier liegt dein Code im Container unter /github/workspace
+          # Du kannst direkt "python update_price.py" aufrufen,
+          # wenn dein Script den Template-Pfad relativ findet.
           python update_price.py
-          # Das Skript sollte nun direkt laufen, da Python + Chromium
-          # bereits im Container installiert sind
-          #
-          # Falls update_price.py Dependencies auf dateien in Repo hat:
-          # -> Die liegen jetzt in /github/workspace,
-          #    also ggf. anpassen. Oder nimm WORKDIR /github/workspace.
 
       - name: Commit and push changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add index.html
-          git commit -m "Automatische Aktualisierung" || echo "Keine Änderungen"
+          git commit -m "Automatische Aktualisierung des Preises" || echo "Keine Änderungen"
           git push
