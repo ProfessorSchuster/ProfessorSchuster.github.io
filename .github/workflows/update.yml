@@ -26,11 +26,17 @@ jobs:
           # Du kannst direkt "python update_price.py" aufrufen,
           # wenn dein Script den Template-Pfad relativ findet.
           python update_price.py
-
-      - name: Commit and push changes
+        
+      - name: Mark repository directory as safe
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      
+      - name: Git config
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
+      
+      - name: Commit and push changes
+        run: |
           git add index.html
-          git commit -m "Automatische Aktualisierung des Preises" || echo "Keine Änderungen"
+          git commit -m "Automatische Aktualisierung" || echo "Keine Änderungen"
           git push
