@@ -1,23 +1,18 @@
-# Dockerfile.build
 FROM python:3.10-slim
 
-# 1) Chromium + Chromedriver + grundlegende Tools installieren
+# Installiere Chromium, Chromedriver, ca-certificates, GIT ...
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         chromium \
         chromium-driver \
+        git \
         ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
-# 2) Arbeitsverzeichnis
 WORKDIR /app
-
-# 3) Requirements kopieren & installieren
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 4) Browser-ENV setzen (damit dein Skript den Pfad kennt)
 ENV CHROME_BINARY=/usr/bin/chromium
 
-# 5) Standardkommando zum Testen (kannst du ändern)
 CMD ["python", "--version"]
