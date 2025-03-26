@@ -1,0 +1,28 @@
+# 1) Basis-Image: schlankes Python 3.10
+FROM python:3.10-slim
+
+# 2) Systemabhängige Abhängigkeiten
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      chromium \
+      chromium-driver \
+      ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+# 3) Arbeitsverzeichnis festlegen
+WORKDIR /app
+
+# 4) Requirements kopieren & installieren
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 5) CHROME_BINARY als ENV setzen
+ENV CHROME_BINARY=/usr/bin/chromium
+
+# 6) Optional: Dein Code direkt rein
+# COPY update_price.py /app/
+# Falls du das Update-Script hier reinpacken willst, kannst du das tun.
+# Meistens checkt man aber den Code in den eigentlichen Workflow-Schritten aus.
+
+# Standard-Command (kann man leer lassen oder "python update_price.py")
+CMD ["python", "--version"]
