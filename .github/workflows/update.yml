@@ -15,7 +15,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/professorschuster/professorschuster-github-io:latest
+      image: ghcr.io/professorschuster/professorschuster.github.io:latest
     steps:
       - name: Check out code
         uses: actions/checkout@v3
