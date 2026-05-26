@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notion Widgets</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #f9f9f8;
@@ -16,17 +22,20 @@
       align-items: center;
       padding: 4rem 2rem;
     }
+
     h1 {
       font-size: 1.6rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       margin-bottom: 0.5rem;
     }
+
     p.subtitle {
       color: #888;
       font-size: 0.95rem;
       margin-bottom: 3rem;
     }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -34,6 +43,7 @@
       width: 100%;
       max-width: 640px;
     }
+
     a.widget-card {
       display: flex;
       flex-direction: column;
@@ -46,27 +56,38 @@
       color: inherit;
       transition: box-shadow 0.15s, border-color 0.15s;
     }
+
     a.widget-card:hover {
-      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
       border-color: #ccc;
     }
-    .widget-card .icon { font-size: 1.6rem; }
+
+    .widget-card .icon {
+      font-size: 1.6rem;
+    }
+
     .widget-card .name {
       font-weight: 500;
       font-size: 1rem;
     }
+
     .widget-card .desc {
       font-size: 0.82rem;
       color: #999;
     }
+
     footer {
       margin-top: 4rem;
       font-size: 0.8rem;
       color: #bbb;
     }
-    footer a { color: #bbb; }
+
+    footer a {
+      color: #bbb;
+    }
   </style>
 </head>
+
 <body>
   <h1>Notion Widgets</h1>
   <p class="subtitle">Embed-ready widgets for Notion pages</p>
@@ -83,4 +104,5 @@
     <a href="/">← Back</a>
   </footer>
 </body>
+
 </html>

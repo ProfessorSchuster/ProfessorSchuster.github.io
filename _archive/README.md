@@ -1,6 +1,4 @@
-# Archiv
-
-Hier liegt alles, was früher aktiv war, bevor das Repo auf die Notion-Widgets-Seite umgestellt wurde.
+# Archiv für automatisches Preis Scrapping in Troostwiijk
 
 ## Was war das?
 
@@ -32,7 +30,7 @@ GitHub Actions (update.yml, stündlich)
 
 ## GitHub Actions
 
-Die Workflows lagen unter `.github/workflows/` und wurden bei der Umstrukturierung deaktiviert (Dateien entfernt). Kopien zur Referenz liegen in `github-workflows/`.
+Die Workflows lagen unter `.github/workflows/`. Kopien zur Referenz liegen in `github-workflows/`.
 
 ### update.yml — Stündlicher Preis-Update
 - Trigger: Push auf main, stündlich (`5 * * * *`), manuell
