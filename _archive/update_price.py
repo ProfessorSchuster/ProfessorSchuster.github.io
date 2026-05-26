@@ -39,7 +39,7 @@ def render_html(price, local_time_str):
     # Template laden
     with open("preis.template.html", "r", encoding="utf-8") as f:
         template = f.read()
-    
+
     # Platzhalter ersetzen
     output = template.replace("{{PREIS}}", price)
     output = output.replace("{{TIME}}", local_time_str)
